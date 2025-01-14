@@ -33,16 +33,16 @@ export const validacionPost = () => {
     check("diaDeSemana")  // comprueba si se encuentra en una lista obtenida por un método (enum, base de datos, etc)
       .custom(async (value) => {
         const diasDeSemanaValidos = await obtenerDiasDeSemana()
-        if(!diasDeSemanaValidos.includes(value)) {
+        if (!diasDeSemanaValidos.includes(value)) {
           throw new Error("día de semana no válido")
         }
         return true
       }),
     check("nombre")
-      .notEmpty() // el campo no debe ser vacío
-      .escape() // escapa código html así evita ataque xss
-      .withMessage("En nombre no puede ser vacío") // mensaje del error 
       .trim()
+      .notEmpty() // el campo no debe ser vacío
+      .withMessage("En nombre no puede ser vacío") // mensaje del error 
+      .escape() // escapa código html así evita ataque xss
       .customSanitizer(value => value.toUpperCase()),  // con esta función actualizo el req.body poniendo a nombre en mayúsculas
     check("correo")
       .notEmpty()
